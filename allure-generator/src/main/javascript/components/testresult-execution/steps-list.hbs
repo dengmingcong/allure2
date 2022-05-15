@@ -1,5 +1,5 @@
 {{#each steps}}
-    <div class="step{{#if (eq status 'failed')}} step_expanded{{/if}}">
+    <div class="step{{#if (or (eq status 'failed') (eq status 'broken'))}} step_expanded{{/if}}">
         <div class="{{b "step" "title" hasContent=hasContent}} long-line">
             {{#if hasContent}}
                 <span class="step__arrow block__arrow">{{arrow status}}</span>

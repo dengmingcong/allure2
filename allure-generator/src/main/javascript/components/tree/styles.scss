@@ -19,6 +19,7 @@
   }
   &__name {
     //flex: 0 0 30%;
+    min-width: fit-content;
   }
   &__marks {
     display: block;

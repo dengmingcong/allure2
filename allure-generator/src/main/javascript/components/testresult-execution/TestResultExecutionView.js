@@ -37,12 +37,15 @@ class TestResultExecutionView extends View {
     const before = makeArray(this.model.get("beforeStages"));
     const test = makeArray(this.model.get("testStage"));
     const after = makeArray(this.model.get("afterStages"));
+    const isFailedOrBrokenExist = (element) => element.status === 'failed' || element.status === 'broken';
     return {
       hasContent: before.length + test.length + after.length > 0,
       before: before,
       test: test,
       after: after,
       baseUrl: this.options.baseUrl,
+      beforeExpanded: before.some(isFailedOrBrokenExist),
+      afterExpanded: after.some(isFailedOrBrokenExist),
     };
   }
 

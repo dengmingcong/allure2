@@ -33,6 +33,9 @@
                     {{#each attachments}}
                         {{> ../../blocks/attachment-row/attachment-row . baseUrl=../../baseUrl}}
                     {{/each}}
+                    {{#if shouldDisplayMessage}}
+                        {{~> ../../blocks/status-details/status-details .}}
+                    {{/if}}
                 {{/if}}
             {{/each}}
         </div>

@@ -21,11 +21,49 @@ class TestResultTreeView extends SideBySideView {
       const baseUrl = `#${this.options.baseUrl}/${treeNode.testGroup}/${treeNode.testResult}`;
       const model = new TestResultModel({ uid: treeNode.testResult });
       model.fetch({
-        success: () =>
+        success: () => {
           this.showChildView(
             "right",
             new TestResultView({ baseUrl, model, routeState: this.routeState }),
-          ),
+          )
+
+          var allStatusDetailsElements = document.querySelectorAll(".status-details");
+
+          // do nothing if only one status-details element exist
+          if (allStatusDetailsElements.length > 1) {
+            // hide top status-details element
+            var topStatusDetailsElement = document.querySelector(".test-result-overview .status-details");
+            topStatusDetailsElement.hidden = true;
+
+            // get all stage elements
+            var stageElements = document.querySelectorAll(".execution__content > .step");
+
+            // iterate over stages
+            for (let i = 0; i < stageElements.length; i++) {
+                let stageElement = stageElements[i];
+
+                // get non-step status-details element
+                let stageNonStepStatusDetailsElement = stageElement.querySelector(":scope > .step__content > .status-details")
+                let message = ""
+                if (stageNonStepStatusDetailsElement) {
+                    message = stageNonStepStatusDetailsElement.querySelector(".status-details__message").textContent.trim()
+                }
+
+                // get all step status-details elements
+                let stageStepStatusDetailsElements = stageElement.querySelectorAll(":scope .step .status-details")
+
+                // hide non-step status-details element if text equal
+                for (let j = 0; j < stageStepStatusDetailsElements.length; j ++) {
+                    let stepStatusDetailsElement = stageStepStatusDetailsElements[j];
+                    let stepStatusDetailsMessage = stepStatusDetailsElement.querySelector(".status-details__message").textContent.trim();
+                    if (stepStatusDetailsMessage === message) {
+                        stageNonStepStatusDetailsElement.hidden = true;
+                        break;
+                    }
+                }
+            }
+          }
+        },
         error: () =>
           this.showChildView(
             "right",

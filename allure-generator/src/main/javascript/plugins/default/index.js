@@ -1,9 +1,9 @@
 import OverviewLayout from "../../layouts/overview/OverviewLayout";
 
-allure.api.addTab("", {
+allure.api.addTab("overview", {
   title: "tab.overview.name",
   icon: "fa fa-home",
-  route: "",
+  route: "overview",
   onEnter: () =>
     new OverviewLayout({
       tabName: "tab.overview.name",

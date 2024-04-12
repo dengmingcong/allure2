@@ -8,11 +8,17 @@ class AppRouter extends Router {
   constructor() {
     super({
       routes: {
+        "": "defaultRoute",
         "testresult/:uid(/)(:tabName)": "testresultPage",
         "*default": "notFound",
       },
     });
     this.on("route", this.onRouteChange, this);
+  }
+
+  defaultRoute() {
+    // 设置初始跳转到packages页面
+    this.navigate('packages', {trigger: true});
   }
 
   onRouteChange() {
